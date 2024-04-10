@@ -1,0 +1,82 @@
+# Blender 4.1.0 MTL File: 'None'
+# www.blender.org
+
+newmtl body
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd body_diffuse.jpeg
+map_Pr body_specularGlossiness.png
+
+newmtl details
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pr 0.654154
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd details_diffuse.jpeg
+
+newmtl gusi
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd gusi_diffuse.jpeg
+map_Pr gusi_specularGlossiness.jpeg
+
+newmtl turret
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd turret_diffuse.jpeg
+map_Pr turret_specularGlossiness.png
+
+newmtl wheel1
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd wheel1_diffuse.jpeg
+map_Pr wheel1_specularGlossiness.png
+
+newmtl wheel_2
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+Pm 0.000000
+Ps 0.000000
+Pc 0.000000
+Pcr 0.030000
+map_Kd wheel_2_diffuse.jpeg
+map_Pr wheel_2_specularGlossiness.png
