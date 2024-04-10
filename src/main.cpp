@@ -78,12 +78,12 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader ourShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/2.model_lighting.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/2.model_lighting.fs");
+    Shader ourShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.fs");
 
     // load models
     // -----------
     Model ourModel(FileSystem::getPath("resources/objects/sun/sun.obj"));
-
+    ourModel.SetShaderTextureNamePrefix("material.");
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -109,6 +109,14 @@ int main()
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
+        // dodavanje svetla
+        ourShader.setVec3("viewPosition", camera.Position);
+        ourShader.setFloat("material.shininess", 32.0f);
+
+        ourShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
+        ourShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
