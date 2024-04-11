@@ -9,3 +9,7 @@ https://www.independent-software.com/tileable-repeatable-hires-terrain-textures-
 "Redwood Tree 2" (https://skfb.ly/6WVrV) by rhcreations is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Pine tree low-poly" (https://skfb.ly/6Z6wM) by Ricardo Sanchez is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Pine Tree" (https://skfb.ly/ouSXM) by evolveduk is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Rusty oil barrels" (https://skfb.ly/o6Dpr) by Helindu is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Oil Drums" (https://skfb.ly/6RJXU) by Oliver Triplett is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Old oil tank" (https://skfb.ly/oAwBD) by ittoKubashi7 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Kv2 lowpoly" (https://skfb.ly/DJZJ) by Comrade1280 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
