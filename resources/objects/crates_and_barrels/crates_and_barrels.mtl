@@ -1,0 +1,50 @@
+# Blender 4.1.0 MTL File: 'None'
+# www.blender.org
+
+newmtl Barrel
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Barrel_baseColor.png
+map_Bump -bm 0.583611 Barrel_normal.png
+map_Pr Barrel_metallicRoughness.png
+
+newmtl Cloth
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd Cloth_baseColor.png
+map_d Cloth_baseColor.png
+map_Bump -bm 1.000000 Cloth_normal.png
+map_Pr Cloth_metallicRoughness.png
+
+newmtl Cloth2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd Cloth2_baseColor.png
+map_d Cloth2_baseColor.png
+map_Bump -bm 1.000000 Cloth2_normal.png
+map_Pr Cloth2_metallicRoughness.png
+
+newmtl Crate
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Crate_baseColor.png
+map_Bump -bm 1.000000 Crate_normal.png
+map_Pr Crate_metallicRoughness.png
