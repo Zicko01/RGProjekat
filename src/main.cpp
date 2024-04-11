@@ -123,7 +123,7 @@ int main()
     // build and compile shaders
     // -------------------------
     Shader lightningShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.fs");
-
+    Shader treeShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.fs");
     // load models
     // -----------
     Model tankModel(FileSystem::getPath("resources/objects/tank_t10m/tank_t10m.obj"));
@@ -186,6 +186,23 @@ int main()
         lightningShader.setMat4("projection", projection);
         lightningShader.setMat4("view", view);
 
+        treeShader.use();
+        // dodavanje svetla
+        treeShader.setVec3("viewPosition", camera.Position);
+        treeShader.setFloat("material.shininess", 32.0f);
+
+        treeShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
+        treeShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
+        treeShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+        treeShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+
+        // view/projection transformations
+        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        view = camera.GetViewMatrix();
+        treeShader.setMat4("projection", projection);
+        treeShader.setMat4("view", view);
+
+        lightningShader.use();
         // render tank
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
@@ -225,26 +242,27 @@ int main()
         lightningShader.setMat4("model", model);
         cratesAndBarrelsModel.Draw(lightningShader);
 
+
+        treeShader.use();
         // render trees
-        /*
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(-2.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        redwoodTreeModel.Draw(lightningShader);
+        treeShader.setMat4("model", model);
+        redwoodTreeModel.Draw(treeShader);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-7.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        pineTreeModel.Draw(lightningShader);
+        //model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.5f));	// it's a bit too big for our scene, so scale it down
+        treeShader.setMat4("model", model);
+        pineTreeModel.Draw(treeShader);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(7.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        pineTreeLowpolyModel.Draw(lightningShader);
-*/
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
+        treeShader.setMat4("model", model);
+        pineTreeLowpolyModel.Draw(treeShader);
+
 
         // render ground texture
         lightningShader.use();
