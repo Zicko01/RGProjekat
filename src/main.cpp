@@ -322,10 +322,31 @@ int main()
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
 
-
+        // render forest
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-37.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        forestModel.Draw(lightingShader);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-15.0f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        forestModel.Draw(lightingShader);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(32.0f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        forestModel.Draw(lightingShader);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(38.0f, -2.0f, -5.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(190.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
