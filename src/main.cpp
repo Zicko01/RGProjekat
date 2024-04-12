@@ -12,7 +12,7 @@
 #include <iostream>
 #include "learnopengl/filesystem.h"
 
-#define GROUND_DIMENSION (20)
+#define GROUND_DIMENSION (80)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -300,7 +300,7 @@ int main()
         lightingShader.setFloat("pointLight.quadratic", 0.0028f);
 
         // directional Light
-        lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, 0.0f);
+        lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, -1.0f);
         lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
         lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
@@ -480,6 +480,10 @@ int main()
 
     glDeleteVertexArrays(1, &skyboxVAO);
     glDeleteBuffers(1, &skyboxVBO);
+
+    glDeleteVertexArrays(1, &groundVAO);
+    glDeleteBuffers(1, &groundVBO);
+    glDeleteBuffers(1, &groundEBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
