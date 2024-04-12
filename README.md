@@ -15,3 +15,4 @@ https://www.independent-software.com/tileable-repeatable-hires-terrain-textures-
 "Kv2 lowpoly" (https://skfb.ly/DJZJ) by Comrade1280 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Low Poly Reflector" (https://skfb.ly/ozPYp) by AstorMilanese is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Pine Forest" (https://skfb.ly/6Rpur) by fangzhangmnm is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Challenger 2 - Shooting Range" (https://skfb.ly/6UQpK) by Tom Zimmermann is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\

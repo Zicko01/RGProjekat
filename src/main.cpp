@@ -122,8 +122,7 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader lightingShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/lightingShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/lightingShader.fs");
-    Shader treeShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.fs");
+    Shader lightingShader("resources/shaders/lightingShader.vs", "resources/shaders/lightingShader.fs");
     // load models
     // -----------
     Model t10mModel(FileSystem::getPath("resources/objects/tank_t10m/tank_t10m.obj"));
@@ -197,8 +196,8 @@ int main()
         lightingShader.setVec3("spotLight1.diffuse", 1.0f, 1.0f, 1.0f);
         lightingShader.setVec3("spotLight1.specular", 1.0f, 1.0f, 1.0f);
         lightingShader.setFloat("spotLight1.constant", 1.0f);
-        lightingShader.setFloat("spotLight1.linear", 0.045f);
-        lightingShader.setFloat("spotLight1.quadratic", 0.0075f);
+        lightingShader.setFloat("spotLight1.linear", 0.007f);
+        lightingShader.setFloat("spotLight1.quadratic", 0.0002f);
         lightingShader.setFloat("spotLight1.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight1.outerCutOff", glm::cos(glm::radians(30.0f)));
 
@@ -209,8 +208,8 @@ int main()
         lightingShader.setVec3("spotLight2.diffuse", 1.0f, 1.0f, 1.0f);
         lightingShader.setVec3("spotLight2.specular", 1.0f, 1.0f, 1.0f);
         lightingShader.setFloat("spotLight2.constant", 1.0f);
-        lightingShader.setFloat("spotLight2.linear", 0.045f);
-        lightingShader.setFloat("spotLight2.quadratic", 0.0075f);
+        lightingShader.setFloat("spotLight2.linear", 0.007f);
+        lightingShader.setFloat("spotLight2.quadratic", 0.0002f);
         lightingShader.setFloat("spotLight2.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight2.outerCutOff", glm::cos(glm::radians(30.0f)));
 
@@ -345,8 +344,8 @@ int main()
         forestModel.Draw(lightingShader);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(38.0f, -2.0f, -5.0f)); // translate it down so it's at the center of the scene
-        model = glm::rotate(model, glm::radians(190.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(38.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
