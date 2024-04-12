@@ -220,13 +220,14 @@ int main()
         lightingShader.setFloat("spotLight2.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight2.outerCutOff", glm::cos(glm::radians(30.0f)));
 
-        lightingShader.setVec3("pointLight.position", 5.5f, -0.3f, -30.0f);
+        // lamp pointlight
+        lightingShader.setVec3("pointLight.position", 4.5f, -0.3f, -30.0f);
         lightingShader.setVec3("pointLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
         lightingShader.setVec3("pointLight.diffuse", glm::vec3(1.0f));
         lightingShader.setVec3("pointLight.specular", glm::vec3(1.0f));
         lightingShader.setFloat("pointLight.constant", 1.0f);
-        lightingShader.setFloat("pointLight.linear", 0.09f);
-        lightingShader.setFloat("pointLight.quadratic", 0.032f);
+        lightingShader.setFloat("pointLight.linear", 0.027f);
+        lightingShader.setFloat("pointLight.quadratic", 0.0028f);
 
         // directional Light
         lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, 0.0f);
@@ -328,9 +329,8 @@ int main()
         reflectorModel.Draw(lightingShader);
 
         // render lamp
-
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(5.5f, -1.0f, -30.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(4.5f, -1.0f, -30.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
