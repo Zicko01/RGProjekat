@@ -14,3 +14,4 @@ https://www.independent-software.com/tileable-repeatable-hires-terrain-textures-
 "Old oil tank" (https://skfb.ly/oAwBD) by ittoKubashi7 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Kv2 lowpoly" (https://skfb.ly/DJZJ) by Comrade1280 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
 "Low Poly Reflector" (https://skfb.ly/ozPYp) by AstorMilanese is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\
+"Pine Forest" (https://skfb.ly/6Rpur) by fangzhangmnm is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).\

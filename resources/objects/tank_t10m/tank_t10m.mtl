@@ -12,7 +12,7 @@ Ps 0.000000
 Pc 0.000000
 Pcr 0.030000
 map_Kd body_diffuse.jpeg
-map_Pr body_specularGlossiness.png
+map_Ks body_specularGlossiness.png
 
 newmtl details
 Ks 0.500000 0.500000 0.500000
@@ -39,7 +39,7 @@ Ps 0.000000
 Pc 0.000000
 Pcr 0.030000
 map_Kd gusi_diffuse.jpeg
-map_Pr gusi_specularGlossiness.jpeg
+map_Ks gusi_specularGlossiness.jpeg
 
 newmtl turret
 Kd 0.800000 0.800000 0.800000
@@ -53,7 +53,7 @@ Ps 0.000000
 Pc 0.000000
 Pcr 0.030000
 map_Kd turret_diffuse.jpeg
-map_Pr turret_specularGlossiness.png
+map_Ks turret_specularGlossiness.png
 
 newmtl wheel1
 Ks 0.500000 0.500000 0.500000
@@ -66,7 +66,7 @@ Ps 0.000000
 Pc 0.000000
 Pcr 0.030000
 map_Kd wheel1_diffuse.jpeg
-map_Pr wheel1_specularGlossiness.png
+map_Ks wheel1_specularGlossiness.png
 
 newmtl wheel_2
 Ks 0.500000 0.500000 0.500000
@@ -79,4 +79,4 @@ Ps 0.000000
 Pc 0.000000
 Pcr 0.030000
 map_Kd wheel_2_diffuse.jpeg
-map_Pr wheel_2_specularGlossiness.png
+map_Ks wheel_2_specularGlossiness.png

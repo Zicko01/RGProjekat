@@ -12,7 +12,7 @@
 #include <iostream>
 #include "learnopengl/filesystem.h"
 
-#define GROUND_DIMENSION (10)
+#define GROUND_DIMENSION (20)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -25,7 +25,7 @@ const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 900;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -159,6 +159,9 @@ int main()
     Model reflectorModel(FileSystem::getPath("resources/objects/reflector/reflector.obj"));
     reflectorModel.SetShaderTextureNamePrefix("material.");
 
+    Model forestModel(FileSystem::getPath("resources/objects/forest/forest.obj"));
+    forestModel.SetShaderTextureNamePrefix("material.");
+
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -186,11 +189,36 @@ int main()
         lightingShader.setVec3("viewPosition", camera.Position);
         lightingShader.setFloat("material.shininess", 32.0f);
 
+        // reflector spotlight
+        glm::vec3 reflector1LightPos = glm::vec3(-10.0f, 5.5f, -3.0f);
+        lightingShader.setVec3("spotLight1.position", reflector1LightPos);
+        lightingShader.setVec3("spotLight1.direction", 11.0f, -5.5f, -11.0f);
+        lightingShader.setVec3("spotLight1.ambient", 0.1f, 0.1f, 0.f);
+        lightingShader.setVec3("spotLight1.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("spotLight1.specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("spotLight1.constant", 1.0f);
+        lightingShader.setFloat("spotLight1.linear", 0.045f);
+        lightingShader.setFloat("spotLight1.quadratic", 0.0075f);
+        lightingShader.setFloat("spotLight1.cutOff", glm::cos(glm::radians(28.0f)));
+        lightingShader.setFloat("spotLight1.outerCutOff", glm::cos(glm::radians(30.0f)));
+
+        glm::vec3 reflector2LightPos = glm::vec3(10.0f, 5.5f, -3.0f);
+        lightingShader.setVec3("spotLight2.position", reflector2LightPos);
+        lightingShader.setVec3("spotLight2.direction", -11.0f, -5.5f, -11.0f);
+        lightingShader.setVec3("spotLight2.ambient", 0.1f, 0.1f, 0.f);
+        lightingShader.setVec3("spotLight2.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("spotLight2.specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("spotLight2.constant", 1.0f);
+        lightingShader.setFloat("spotLight2.linear", 0.045f);
+        lightingShader.setFloat("spotLight2.quadratic", 0.0075f);
+        lightingShader.setFloat("spotLight2.cutOff", glm::cos(glm::radians(28.0f)));
+        lightingShader.setFloat("spotLight2.outerCutOff", glm::cos(glm::radians(30.0f)));
+
 
         // directional Light
-        lightingShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
-        lightingShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
-        lightingShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, 0.0f);
+        lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
         // view/projection transformations
@@ -287,25 +315,20 @@ int main()
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
 
-        treeShader.use();
-        // render trees
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        treeShader.setMat4("model", model);
-        redwoodTreeModel.Draw(treeShader);
+        model = glm::translate(model, glm::vec3(10.0f, -2.0f, -3.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        reflectorModel.Draw(lightingShader);
+
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-7.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
-        //model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        treeShader.setMat4("model", model);
-        pineTreeModel.Draw(treeShader);
-
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(7.0f, -2.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
-        treeShader.setMat4("model", model);
-        pineTreeLowpolyModel.Draw(treeShader);
+        model = glm::translate(model, glm::vec3(-37.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        forestModel.Draw(lightingShader);
 
 
 

@@ -51,7 +51,8 @@ in vec2 TexCoords;
 uniform vec3 viewPos;
 uniform DirLight dirLight;
 //uniform PointLight pointLights[NR_POINT_LIGHTS];
-//uniform SpotLight spotLight;
+uniform SpotLight spotLight1;
+uniform SpotLight spotLight2;
 uniform Material material;
 
 // function prototypes
@@ -77,7 +78,8 @@ void main()
     // for(int i = 0; i < NR_POINT_LIGHTS; i++)
     //    result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     // phase 3: spot light
-    //result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    result += CalcSpotLight(spotLight1, norm, FragPos, viewDir);
+    result += CalcSpotLight(spotLight2, norm, FragPos, viewDir);
 
     FragColor = vec4(result, 1.0);
 }
@@ -95,6 +97,10 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
+
+    if(texture(material.diffuse, TexCoords).a < 0.5)
+            discard;
+
     return (ambient + diffuse + specular);
 }
 
