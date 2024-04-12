@@ -62,7 +62,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -165,6 +165,8 @@ int main()
 
     Model challenger2Model(FileSystem::getPath("resources/objects/challenger2_shooting_range/challenger2_shooting_range.obj"));
     challenger2Model.SetShaderTextureNamePrefix("material.");
+    Model lampModel(FileSystem::getPath("resources/objects/lamp/lamp.obj"));
+    lampModel.SetShaderTextureNamePrefix("material.");
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -244,7 +246,7 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-8.0f, -2.0f, -25.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         kv2Model.Draw(lightingShader);
 
@@ -252,22 +254,22 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(10.0f, -2.0f, -25.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(1.4f, 1.4f, 1.4f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         challenger2Model.Draw(lightingShader);
 
         // render ammo boxes
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-7.0f, -2.0f, -12.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(10.0f, -2.0f, -16.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.04f, 0.04f, 0.04f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         ammoBoxModel.Draw(lightingShader);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-6.32f, -2.0f, -11.83f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(11.34f, -2.0f, -15.57f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.04f, 0.04f, 0.04f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         ammoBoxModel.Draw(lightingShader);
 
@@ -275,15 +277,15 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-9.0f, -2.0f, -17.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         watchtowerModel.Draw(lightingShader);
 
         // render crates and barrels
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(7.0f, -2.0f, -17.0f)); // translate it down so it's at the center of the scene
-        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
+        model = glm::translate(model, glm::vec3(-9.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         cratesAndBarrelsModel.Draw(lightingShader);
 
@@ -318,23 +320,32 @@ int main()
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
 
+        // render lamp
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(5.5f, -1.0f, -30.0f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        lampModel.Draw(lightingShader);
+
         // render forest
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-37.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(-38.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-15.0f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(-16.5f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(32.0f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(30.5f, -2.0f, -50.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
