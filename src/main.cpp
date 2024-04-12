@@ -226,22 +226,6 @@ int main()
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
 
-        treeShader.use();
-        // dodavanje svetla
-        treeShader.setVec3("viewPosition", camera.Position);
-        treeShader.setFloat("material.shininess", 32.0f);
-
-        treeShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
-        treeShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
-        treeShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
-        treeShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-
-        // view/projection transformations
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = camera.GetViewMatrix();
-        treeShader.setMat4("projection", projection);
-        treeShader.setMat4("view", view);
-
         lightingShader.use();
         // render tank t10m
         glm::mat4 model = glm::mat4(1.0f);
