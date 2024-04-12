@@ -21,8 +21,8 @@ void processInput(GLFWwindow *window);
 unsigned int loadTexture(char const *path);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1200;
+const unsigned int SCR_HEIGHT = 900;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -122,12 +122,12 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader lightningShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/lightningShader.fs");
+    Shader lightingShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/lightingShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/lightingShader.fs");
     Shader treeShader("/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.vs", "/home/vkozic/Desktop/RGProjekat/resources/shaders/treeShader.fs");
     // load models
     // -----------
-    Model tankModel(FileSystem::getPath("resources/objects/tank_t10m/tank_t10m.obj"));
-    tankModel.SetShaderTextureNamePrefix("material.");
+    Model t10mModel(FileSystem::getPath("resources/objects/tank_t10m/tank_t10m.obj"));
+    t10mModel.SetShaderTextureNamePrefix("material.");
 
     Model ammoBoxModel(FileSystem::getPath("resources/objects/ammo_box/ammo_box.obj"));
     ammoBoxModel.SetShaderTextureNamePrefix("material.");
@@ -146,6 +146,18 @@ int main()
 
     Model pineTreeLowpolyModel(FileSystem::getPath("resources/objects/pine_tree_low-poly/pine_tree_low-poly.obj"));
     pineTreeLowpolyModel.SetShaderTextureNamePrefix("material.");
+
+    Model kv2Model(FileSystem::getPath("resources/objects/kv2/kv2.obj"));
+    kv2Model.SetShaderTextureNamePrefix("material.");
+
+    Model oilDrumsModel(FileSystem::getPath("resources/objects/oil_drums/oil_drums.obj"));
+    oilDrumsModel.SetShaderTextureNamePrefix("material.");
+
+    Model rustyOilBarrelsModel(FileSystem::getPath("resources/objects/rusty_oil_barrels/rusty_oil_barrels.obj"));
+    rustyOilBarrelsModel.SetShaderTextureNamePrefix("material.");
+
+    Model reflectorModel(FileSystem::getPath("resources/objects/reflector/reflector.obj"));
+    reflectorModel.SetShaderTextureNamePrefix("material.");
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -170,21 +182,22 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // don't forget to enable shader before setting uniforms
-        lightningShader.use();
-        // dodavanje svetla
-        lightningShader.setVec3("viewPosition", camera.Position);
-        lightningShader.setFloat("material.shininess", 32.0f);
+        lightingShader.use();
+        lightingShader.setVec3("viewPosition", camera.Position);
+        lightingShader.setFloat("material.shininess", 32.0f);
 
-        lightningShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
-        lightningShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
-        lightningShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
-        lightningShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+
+        // directional Light
+        lightingShader.setVec3("dirLight.direction", -1.0f, 0.0f, 0.0f);
+        lightingShader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-        lightningShader.setMat4("projection", projection);
-        lightningShader.setMat4("view", view);
+        lightingShader.setMat4("projection", projection);
+        lightingShader.setMat4("view", view);
 
         treeShader.use();
         // dodavanje svetla
@@ -202,46 +215,77 @@ int main()
         treeShader.setMat4("projection", projection);
         treeShader.setMat4("view", view);
 
-        lightningShader.use();
-        // render tank
+        lightingShader.use();
+        // render tank t10m
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        tankModel.Draw(lightningShader);
+        lightingShader.setMat4("model", model);
+        t10mModel.Draw(lightingShader);
 
-        // render ammo box
+        // render tank kv2
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-8.0f, -2.0f, -25.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        kv2Model.Draw(lightingShader);
+
+        // render ammo boxes
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-7.0f, -2.0f, -12.0f)); // translate it down so it's at the center of the scene
         //model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        ammoBoxModel.Draw(lightningShader);
+        lightingShader.setMat4("model", model);
+        ammoBoxModel.Draw(lightingShader);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-6.32f, -2.0f, -11.83f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        ammoBoxModel.Draw(lightningShader);
+        lightingShader.setMat4("model", model);
+        ammoBoxModel.Draw(lightingShader);
 
         // render watchtower
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-9.0f, -2.0f, -17.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        watchtowerModel.Draw(lightningShader);
+        lightingShader.setMat4("model", model);
+        watchtowerModel.Draw(lightingShader);
 
         // render crates and barrels
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(7.0f, -2.0f, -17.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-        lightningShader.setMat4("model", model);
-        cratesAndBarrelsModel.Draw(lightningShader);
+        lightingShader.setMat4("model", model);
+        cratesAndBarrelsModel.Draw(lightingShader);
 
+        // render oil drums
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(10.0f, -2.0f, -7.0f)); // translate it down so it's at the center of the scene
+       //model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        oilDrumsModel.Draw(lightingShader);
+
+        // render rusty oil barrels
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(10.0f, -2.0f, -10.0f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.004f, 0.004f, 0.004f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        rustyOilBarrelsModel.Draw(lightingShader);
+
+        // render reflector
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-10.0f, -2.0f, -3.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        reflectorModel.Draw(lightingShader);
 
         treeShader.use();
         // render trees
@@ -264,8 +308,9 @@ int main()
         pineTreeLowpolyModel.Draw(treeShader);
 
 
+
         // render ground texture
-        lightningShader.use();
+        lightingShader.use();
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseGround);
@@ -276,9 +321,9 @@ int main()
                 model = glm::translate(model, glm::vec3(((float)i - GROUND_DIMENSION / 2.0f) * 2.0f, -2.0f, j * (-2.0f)));
                 model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
                 model = glm::scale(model, glm::vec3(2.0f));
-                lightningShader.setMat4("model", model);
-                lightningShader.setMat4("view", view);
-                lightningShader.setMat4("projection", projection);
+                lightingShader.setMat4("model", model);
+                lightingShader.setMat4("view", view);
+                lightingShader.setMat4("projection", projection);
 
                 glBindVertexArray(groundVAO);
                 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
