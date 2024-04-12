@@ -220,6 +220,13 @@ int main()
         lightingShader.setFloat("spotLight2.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight2.outerCutOff", glm::cos(glm::radians(30.0f)));
 
+        lightingShader.setVec3("pointLight.position", 5.5f, -0.3f, -30.0f);
+        lightingShader.setVec3("pointLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        lightingShader.setVec3("pointLight.diffuse", glm::vec3(1.0f));
+        lightingShader.setVec3("pointLight.specular", glm::vec3(1.0f));
+        lightingShader.setFloat("pointLight.constant", 1.0f);
+        lightingShader.setFloat("pointLight.linear", 0.09f);
+        lightingShader.setFloat("pointLight.quadratic", 0.032f);
 
         // directional Light
         lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, 0.0f);
