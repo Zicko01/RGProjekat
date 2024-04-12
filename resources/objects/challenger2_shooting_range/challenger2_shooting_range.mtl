@@ -1,0 +1,178 @@
+# Blender 4.1.0 MTL File: 'None'
+# www.blender.org
+
+newmtl ammo1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ammo1_baseColor.png
+map_Bump -bm 1.000000 ammo1_normal.png
+
+newmtl ammoboxes
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ammoboxes_baseColor.jpeg
+map_Bump -bm 1.000000 ammoboxes_normal.png
+
+newmtl barrrel
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd barrrel_baseColor.jpeg
+map_Bump -bm 1.000000 barrrel_normal.png
+
+newmtl barrrel1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd barrrel1_baseColor.jpeg
+map_Bump -bm 1.000000 barrrel1_normal.png
+
+newmtl chassiss
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd chassiss_baseColor.jpeg
+map_Bump -bm 1.000000 chassiss_normal.png
+
+newmtl holz1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd holz1_baseColor.png
+map_Bump -bm 1.000000 holz1_normal.png
+
+newmtl jerrys
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd jerrys_baseColor.jpeg
+map_Bump -bm 1.000000 jerrys_normal.png
+
+newmtl kedde1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd kedde1_baseColor.jpeg
+map_Bump -bm 1.000000 kedde1_normal.png
+
+newmtl laufenwerk
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd laufenwerk_baseColor.jpeg
+map_Bump -bm 1.000000 laufenwerk_normal.png
+
+newmtl radioo
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd radioo_baseColor.jpeg
+map_Bump -bm 1.000000 radioo_normal.png
+
+newmtl sandsacks
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd sandsacks_baseColor.jpeg
+map_Bump -bm 1.000000 sandsacks_normal.png
+
+newmtl tassee
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd tassee_baseColor.jpeg
+map_Bump -bm 1.000000 tassee_normal.png
+
+newmtl tisch1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd tisch1_baseColor.jpeg
+map_Bump -bm 1.000000 tisch1_normal.png
+
+newmtl turrret
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd turrret_baseColor.jpeg
+map_Bump -bm 1.000000 turrret_normal.png
+
+newmtl zelt1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd zelt1_baseColor.jpeg
+map_Bump -bm 1.000000 zelt1_normal.png
+
+newmtl zettel1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd zettel1_baseColor.jpeg
+map_Bump -bm 1.000000 zettel1_normal.png

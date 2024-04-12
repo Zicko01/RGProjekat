@@ -79,7 +79,7 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 
     // ground texture
 
@@ -163,6 +163,9 @@ int main()
     Model forestModel(FileSystem::getPath("resources/objects/forest/forest.obj"));
     forestModel.SetShaderTextureNamePrefix("material.");
 
+    Model challenger2Model(FileSystem::getPath("resources/objects/challenger2_shooting_range/challenger2_shooting_range.obj"));
+    challenger2Model.SetShaderTextureNamePrefix("material.");
+
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -244,6 +247,14 @@ int main()
         //model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
         lightingShader.setMat4("model", model);
         kv2Model.Draw(lightingShader);
+
+        // render tank challenger2
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(10.0f, -2.0f, -25.0f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));	// it's a bit too big for our scene, so scale it down
+        lightingShader.setMat4("model", model);
+        challenger2Model.Draw(lightingShader);
 
         // render ammo boxes
         model = glm::mat4(1.0f);
@@ -339,8 +350,6 @@ int main()
 
 
         // render ground texture
-        lightingShader.use();
-
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseGround);
 
