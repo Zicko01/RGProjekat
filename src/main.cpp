@@ -62,7 +62,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -232,6 +232,10 @@ int main()
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    lightingShader.use();
+    lightingShader.setInt("material.diffuse", 0);
+    lightingShader.setInt("material.specular", 1);
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -311,7 +315,7 @@ int main()
         model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         t10mModel.Draw(lightingShader);
-
+/*
         // render tank kv2
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-8.0f, -2.0f, -25.0f));
@@ -368,7 +372,7 @@ int main()
         model = glm::scale(model, glm::vec3(0.004f, 0.004f, 0.004f));
         lightingShader.setMat4("model", model);
         rustyOilBarrelsModel.Draw(lightingShader);
-
+*/
         // render reflector
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-10.0f, -2.0f, -3.0f));
@@ -387,7 +391,7 @@ int main()
         model = glm::translate(model, glm::vec3(4.5f, -1.0f, -30.0f));
         lightingShader.setMat4("model", model);
         lampModel.Draw(lightingShader);
-
+/*
         // render forest
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-38.0f, -2.0f, -10.0f));
@@ -411,12 +415,14 @@ int main()
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
-
+*/
 
 
         // render ground texture
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseGround);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         for(int i = 0; i < GROUND_DIMENSION; i ++) {
             for(int j = 0; j < GROUND_DIMENSION; j ++) {
