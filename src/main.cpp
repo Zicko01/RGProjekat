@@ -20,10 +20,14 @@ void processInput(GLFWwindow *window);
 unsigned int loadTexture(char const *path);
 unsigned int loadCubemap(vector<std::string> faces);
 void renderCube();
+void renderQuad();
 
 // settings
 const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 900;
+bool bloom = true;
+bool bloomKeyPressed = false;
+float exposure = 1.0f;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -86,10 +90,12 @@ int main()
     Shader lightingShader("resources/shaders/lightingShader.vs", "resources/shaders/lightingShader.fs");
     Shader skyboxShader("resources/shaders/skybox.vs", "resources/shaders/skybox.fs");
     Shader lightCubeShader("resources/shaders/lightingShader.vs", "resources/shaders/lightCubeShader.fs");
+    Shader blurShader("resources/shaders/blur.vs", "resources/shaders/blur.fs");
+    Shader bloomShader("resources/shaders/bloom.vs", "resources/shaders/bloom.fs");
 
     // configure (floating point) framebuffers
     // ---------------------------------------
-   /* unsigned int hdrFBO;
+    unsigned int hdrFBO;
     glGenFramebuffers(1, &hdrFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     std::cout << "Prosao" << std::endl;
@@ -140,7 +146,7 @@ int main()
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
             std::cout << "Framebuffer not complete!" << std::endl;
     }
-*/
+
     // ground vertices
     float groundVertices[] = {
             // positions          // normals        //texCoords
@@ -256,7 +262,7 @@ int main()
     // load models
     Model t10mModel(FileSystem::getPath("resources/objects/tank_t10m/tank_t10m.obj"));
     t10mModel.SetShaderTextureNamePrefix("material.");
-/*
+
     Model ammoBoxModel(FileSystem::getPath("resources/objects/ammo_box/ammo_box.obj"));
     ammoBoxModel.SetShaderTextureNamePrefix("material.");
 
@@ -274,7 +280,7 @@ int main()
 
     Model rustyOilBarrelsModel(FileSystem::getPath("resources/objects/rusty_oil_barrels/rusty_oil_barrels.obj"));
     rustyOilBarrelsModel.SetShaderTextureNamePrefix("material.");
-*/
+
     Model reflectorModel(FileSystem::getPath("resources/objects/reflector/reflector.obj"));
     reflectorModel.SetShaderTextureNamePrefix("material.");
 /*
@@ -295,7 +301,11 @@ int main()
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
     lightingShader.setInt("material.specular", 1);
-    std::cout << "Prosao" << std::endl;
+    blurShader.use();
+    blurShader.setInt("image", 0);
+    bloomShader.use();
+    bloomShader.setInt("scene", 0);
+    bloomShader.setInt("bloomBlur", 1);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -305,15 +315,17 @@ int main()
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        std::cout << "Prosao" << std::endl;
         // input
         // -----
         processInput(window);
 
         // render
         // ------
-        //glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // don't forget to enable shader before setting uniforms
@@ -384,14 +396,14 @@ int main()
         model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
         lightingShader.setMat4("model", model);
         kv2Model.Draw(lightingShader);
-*/
+
         // render tank challenger2
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(10.0f, -2.0f, -25.0f));
         model = glm::scale(model, glm::vec3(1.4f, 1.4f, 1.4f));
         lightingShader.setMat4("model", model);
         challenger2Model.Draw(lightingShader);
-/*
+
         // render ammo boxes
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(10.0f, -2.0f, -16.0f));
@@ -433,14 +445,14 @@ int main()
         model = glm::scale(model, glm::vec3(0.004f, 0.004f, 0.004f));
         lightingShader.setMat4("model", model);
         rustyOilBarrelsModel.Draw(lightingShader);
-*/
+
         // render reflector
-        model = glm::mat4(1.0f);
+/*        model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-10.0f, -2.0f, -3.0f));
         model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
-
+*//*
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(10.0f, -2.0f, -3.0f));
         model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -510,8 +522,6 @@ int main()
         lightCubeShader.setVec3("lightColor", cubeColor);
         renderCube();
 
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
         view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
@@ -525,6 +535,38 @@ int main()
         glBindVertexArray(0);
         glDepthFunc(GL_LESS);
 
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        // 2. blur bright fragments with two-pass Gaussian Blur
+        // --------------------------------------------------
+        bool horizontal = true, first_iteration = true;
+        unsigned int amount = 10;
+        blurShader.use();
+        for (unsigned int i = 0; i < amount; i++)
+        {
+            glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[horizontal]);
+            blurShader.setInt("horizontal", horizontal);
+            glBindTexture(GL_TEXTURE_2D, first_iteration ? colorBuffers[1] : pingpongColorbuffers[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
+            renderQuad();
+            horizontal = !horizontal;
+            if (first_iteration)
+                first_iteration = false;
+        }
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        // 3. now render floating point color buffer to 2D quad and tonemap HDR colors to default framebuffer's (clamped) color range
+        // --------------------------------------------------------------------------------------------------------------------------
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        bloomShader.use();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[!horizontal]);
+        bloomShader.setInt("bloom", bloom);
+        bloomShader.setFloat("exposure", exposure);
+        renderQuad();
+
+        std::cout << "bloom: " << (bloom ? "on" : "off") << "| exposure: " << exposure << std::endl;
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -621,6 +663,35 @@ void renderCube()
     glBindVertexArray(0);
 }
 
+unsigned int quadVAO = 0;
+unsigned int quadVBO;
+void renderQuad()
+{
+    if (quadVAO == 0)
+    {
+        float quadVertices[] = {
+                // positions        // texture Coords
+                -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+                -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+                1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+                1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        };
+        // setup plane VAO
+        glGenVertexArrays(1, &quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glBindVertexArray(quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    }
+    glBindVertexArray(quadVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindVertexArray(0);
+}
+
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
@@ -636,6 +707,28 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !bloomKeyPressed)
+    {
+        bloom = !bloom;
+        bloomKeyPressed = true;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+    {
+        bloomKeyPressed = false;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        if (exposure > 0.0f)
+            exposure -= 0.1f;
+        else
+            exposure = 0.0f;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+        exposure += 0.1f;
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
