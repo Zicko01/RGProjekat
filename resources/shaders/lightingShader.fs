@@ -51,7 +51,7 @@ in vec2 TexCoords;
 
 uniform vec3 viewPos;
 uniform DirLight dirLight;
-uniform PointLight pointLight;
+uniform PointLight pointLight[4];
 uniform SpotLight spotLight1;
 uniform SpotLight spotLight2;
 uniform Material material;
@@ -76,7 +76,9 @@ void main()
     // phase 1: directional lighting
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point light
-    result += CalcPointLight(pointLight, norm, FragPos, viewDir);
+    for(int i = 0; i < 4; i ++) {
+        result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
+    }
     // phase 3: spot lights
     result += CalcSpotLight(spotLight1, norm, FragPos, viewDir);
     result += CalcSpotLight(spotLight2, norm, FragPos, viewDir);
@@ -129,6 +131,10 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
+
+    if(texture(material.diffuse, TexCoords).a < 0.5)
+                discard;
+
     return (ambient + diffuse + specular);
 }
 
@@ -155,5 +161,9 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
+
+    if(texture(material.diffuse, TexCoords).a < 0.5)
+                discard;
+
     return (ambient + diffuse + specular);
 }

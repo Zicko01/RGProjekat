@@ -9,6 +9,8 @@
 #include <learnopengl/model.h>
 
 #include <iostream>
+#include <string>
+
 #include "learnopengl/filesystem.h"
 
 #define GROUND_DIMENSION (80)
@@ -67,7 +69,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -283,20 +285,34 @@ int main()
 
     Model reflectorModel(FileSystem::getPath("resources/objects/reflector/reflector.obj"));
     reflectorModel.SetShaderTextureNamePrefix("material.");
-/*
+
     Model forestModel(FileSystem::getPath("resources/objects/forest/forest.obj"));
     forestModel.SetShaderTextureNamePrefix("material.");
-*/
+
     Model challenger2Model(FileSystem::getPath("resources/objects/challenger2_shooting_range/challenger2_shooting_range.obj"));
     challenger2Model.SetShaderTextureNamePrefix("material.");
-
-    Model lampModel(FileSystem::getPath("resources/objects/lamp/lamp.obj"));
-    lampModel.SetShaderTextureNamePrefix("material.");
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glm::vec3 cubeColor = glm::vec3(10.0f,  10.0f,  10.0f);
+    std::vector<glm::vec3> lightCubePositions;
+    lightCubePositions.push_back(glm::vec3(-8.4f, -0.7f, -8.95f));
+    lightCubePositions.push_back(glm::vec3(-9.0f, 12.78f, -17.0f));
+    lightCubePositions.push_back(glm::vec3(10.0f, -0.73f, -10.0f));
+    lightCubePositions.push_back(glm::vec3(1.2f, -0.61f, -25.3f));
+
+    std::vector<glm::vec3> lightCubeColors;
+    lightCubeColors.push_back(glm::vec3(0.0f,  0.0f,  15.0f));
+    lightCubeColors.push_back(glm::vec3(5.0f,  5.0f,  5.0f));
+    lightCubeColors.push_back(glm::vec3(10.0f,  0.0f,  0.0f));
+    lightCubeColors.push_back(glm::vec3(0.0f,  5.0f,  0.0f));
+    glm::vec3 cubeColor = glm::vec3(0.0f,  5.0f,  0.0f);
+
+    std::vector<glm::vec3> lightColor;
+    lightColor.push_back(glm::vec3(0.0f, 0.0f, 0.2f));
+    lightColor.push_back(glm::vec3(0.2f, 0.2f, 0.2f));
+    lightColor.push_back(glm::vec3(0.2f, 0.0f, 0.0f));
+    lightColor.push_back(glm::vec3(0.0f, 0.2f, 0.0f));
 
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
@@ -333,45 +349,51 @@ int main()
         lightingShader.setVec3("viewPosition", camera.Position);
         lightingShader.setFloat("material.shininess", 32.0f);
 
+
+
         // reflector spotlight
         glm::vec3 reflector1LightPos = glm::vec3(-10.0f, 5.5f, -3.0f);
         lightingShader.setVec3("spotLight1.position", reflector1LightPos);
         lightingShader.setVec3("spotLight1.direction", 11.0f, -5.5f, -11.0f);
-        lightingShader.setVec3("spotLight1.ambient", 0.1f, 0.1f, 0.f);
-        lightingShader.setVec3("spotLight1.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("spotLight1.ambient", 0.1f, 0.1f, 0.1f);
+        lightingShader.setVec3("spotLight1.diffuse", 0.5f, 0.5f, 0.5f);
         lightingShader.setVec3("spotLight1.specular", 1.0f, 1.0f, 1.0f);
         lightingShader.setFloat("spotLight1.constant", 1.0f);
-        lightingShader.setFloat("spotLight1.linear", 0.007f);
-        lightingShader.setFloat("spotLight1.quadratic", 0.0002f);
+        lightingShader.setFloat("spotLight1.linear", 0.045f);
+        lightingShader.setFloat("spotLight1.quadratic", 0.0075f);
         lightingShader.setFloat("spotLight1.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight1.outerCutOff", glm::cos(glm::radians(30.0f)));
 
         glm::vec3 reflector2LightPos = glm::vec3(10.0f, 5.5f, -3.0f);
         lightingShader.setVec3("spotLight2.position", reflector2LightPos);
         lightingShader.setVec3("spotLight2.direction", -11.0f, -5.5f, -11.0f);
-        lightingShader.setVec3("spotLight2.ambient", 0.1f, 0.1f, 0.f);
-        lightingShader.setVec3("spotLight2.diffuse", 1.0f, 1.0f, 1.0f);
+        lightingShader.setVec3("spotLight2.ambient", 0.1f, 0.1f, 0.1f);
+        lightingShader.setVec3("spotLight2.diffuse", 0.5f, 0.5f, 0.5f);
         lightingShader.setVec3("spotLight2.specular", 1.0f, 1.0f, 1.0f);
         lightingShader.setFloat("spotLight2.constant", 1.0f);
-        lightingShader.setFloat("spotLight2.linear", 0.007f);
-        lightingShader.setFloat("spotLight2.quadratic", 0.0002f);
+        lightingShader.setFloat("spotLight2.linear", 0.045f);
+        lightingShader.setFloat("spotLight2.quadratic", 0.0075f);
         lightingShader.setFloat("spotLight2.cutOff", glm::cos(glm::radians(28.0f)));
         lightingShader.setFloat("spotLight2.outerCutOff", glm::cos(glm::radians(30.0f)));
 
-        // lamp pointlight
-        lightingShader.setVec3("pointLight.position", 4.5f, -0.3f, -30.0f);
-        lightingShader.setVec3("pointLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        lightingShader.setVec3("pointLight.diffuse", glm::vec3(1.0f));
-        lightingShader.setVec3("pointLight.specular", glm::vec3(1.0f));
-        lightingShader.setFloat("pointLight.constant", 1.0f);
-        lightingShader.setFloat("pointLight.linear", 0.027f);
-        lightingShader.setFloat("pointLight.quadratic", 0.0028f);
+        // point Lights
+        int numOfPointLights = static_cast<int>(lightCubePositions.size());
+        for(int i = 0; i < numOfPointLights; i ++) {
+            std::string s = "pointLight[";
+            lightingShader.setVec3(s + std::to_string(i) + "].position", lightCubePositions[i]);
+            lightingShader.setVec3(s + std::to_string(i) + "].ambient", lightColor[i]);
+            lightingShader.setVec3(s + std::to_string(i) + "].diffuse", lightColor[i]);
+            lightingShader.setVec3(s + std::to_string(i) + "].specular", glm::vec3(0.1f));
+            lightingShader.setFloat(s + std::to_string(i) + "].constant", 1.0f);
+            lightingShader.setFloat(s + std::to_string(i) + "].linear", 0.7f);
+            lightingShader.setFloat(s + std::to_string(i) + "].quadratic", 1.8f);
+        }
 
         // directional Light
         lightingShader.setVec3("dirLight.direction", -1.0f, -1.0f, -1.0f);
-        lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-        lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-        lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.setVec3("dirLight.ambient", 0.005f, 0.005f, 0.005f);
+        lightingShader.setVec3("dirLight.diffuse", 0.005f, 0.005f, 0.005f);
+        lightingShader.setVec3("dirLight.specular", 0.1f, 0.1f, 0.1f);
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -388,7 +410,7 @@ int main()
         model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         t10mModel.Draw(lightingShader);
-/*
+
         // render tank kv2
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-8.0f, -2.0f, -25.0f));
@@ -447,24 +469,18 @@ int main()
         rustyOilBarrelsModel.Draw(lightingShader);
 
         // render reflector
-/*        model = glm::mat4(1.0f);
+        model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-10.0f, -2.0f, -3.0f));
         model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
-*//*
+
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(10.0f, -2.0f, -3.0f));
         model = glm::rotate(model, glm::radians(-135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         reflectorModel.Draw(lightingShader);
 
-        // render lamp
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.5f, -1.0f, -30.0f));
-        lightingShader.setMat4("model", model);
-        lampModel.Draw(lightingShader);
-/*
         // render forest
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-38.0f, -2.0f, -10.0f));
@@ -488,7 +504,7 @@ int main()
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightingShader.setMat4("model", model);
         forestModel.Draw(lightingShader);
-*/
+
 
         // render ground texture
         glActiveTexture(GL_TEXTURE0);
@@ -515,12 +531,14 @@ int main()
         lightCubeShader.setMat4("projection", projection);
         lightCubeShader.setMat4("view", view);
 
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -20.0f));
-        model = glm::scale(model, glm::vec3(0.25f));
-        lightCubeShader.setMat4("model", model);
-        lightCubeShader.setVec3("lightColor", cubeColor);
-        renderCube();
+        for (unsigned int i = 0; i < lightCubePositions.size(); i ++) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, lightCubePositions[i]);
+            model = glm::scale(model, glm::vec3(0.15f));
+            lightCubeShader.setMat4("model", model);
+            lightCubeShader.setVec3("lightColor", lightCubeColors[i]);
+            renderCube();
+        }
 
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
@@ -721,13 +739,13 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
     {
         if (exposure > 0.0f)
-            exposure -= 0.1f;
+            exposure -= 0.001f;
         else
             exposure = 0.0f;
     }
     else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
     {
-        exposure += 0.1f;
+        exposure += 0.001f;
     }
 }
 

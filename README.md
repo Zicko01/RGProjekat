@@ -4,6 +4,8 @@ Projekat iz kursa Računarska grafika na Matematičkom fakultetu u Beogradu
 ## Implementirani efekti:
 - Grupa A:
 - [x] Cubemaps/Skybox
+- Grupa B:
+- [x] HDR & Bloom
 
 ## Pokretanje
 
@@ -19,7 +21,9 @@ $ ./project_base
 
 ## Korišćenje
 
-Pomoću WASD dugmića i miša korisnik se kreće po terenu
+Pomoću WASD dugmića i miša korisnik se kreće po terenu \
+Pritiskom na taster Space, korisnik pali, odnosno gasi bloom efekat \
+Pomoću Q/E korisnik smanjuje/povećava exposure kako bi video HDR efekat
 
 ## Resursi
 
@@ -33,7 +37,6 @@ Pomoću WASD dugmića i miša korisnik se kreće po terenu
 - "Low Poly Reflector" (https://skfb.ly/ozPYp) by AstorMilanese is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - "Pine Forest" (https://skfb.ly/6Rpur) by fangzhangmnm is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - "Challenger 2 - Shooting Range" (https://skfb.ly/6UQpK) by Tom Zimmermann is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-- "Tripod Omni Directional Lamp" (https://skfb.ly/6tBEt) by Rakshaan is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - Ground: https://www.independent-software.com/tileable-repeatable-hires-terrain-textures-for-download.html
 
 ## Slika projekta
